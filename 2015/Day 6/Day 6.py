@@ -59,7 +59,9 @@ def togglebrightness(grid, x1, y1, x2, y2):
             grid[x][y] += 2
 
 def translateInstructions(instructions):
-    '''reads turn on / turn off / toggle and calls the appropriate function'''
+    '''reads turn on / turn off / toggle and calls the appropriate function
+    after writing this i realized i should probably have made retrieving the 
+    coordinates its own function to make these lines less painful to read'''
     grid = [[0 for x in range(1000)] for y in range(1000)]
     for instruction in instructions:
         if instruction[0] == 'turn':
