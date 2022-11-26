@@ -6,8 +6,7 @@ def minMaxPath(pairs, mode):
     '''returns min and max path length in a non-oriented graph'''
     distances = []
     for x in perm(pairs):
-        for i in range(len(x) - 1):
-            distances.append(sum(pairs[x[i]][x[i+1]]))
+        distances.append(sum(pairs[x[i]][x[i+1]] for i in range(len(x) - 1)))
     if mode == 'min':
         return min(distances) 
     else:
