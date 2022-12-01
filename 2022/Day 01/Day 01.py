@@ -3,6 +3,25 @@ filepath = 'Day 01 input.txt'
 # not my very first implementation, but revisited after solving and slimmed it down a little
 # my first solution was AWFUL
 
+
+# 9:53 PM slim down -- 
+def aio(filepath):
+    '''adding an all-in-one function that does both parts in twelve lines:'''
+    with open(filepath, 'r') as f:
+        data = f.readlines()
+    elves = []
+    current = 0
+    for line in data:
+        if line == '\n':
+            elves.append(current)
+            current = 0
+        else:
+            current += int(line)
+    print('Part one:', sorted(elves)[-1], 'Part two:', (sorted(elves)[-1] + sorted(elves)[-2] + sorted(elves)[-3]))
+
+
+# the original stuff below    
+    
 def openFile(filepath):
     '''reads the raw file'''
     with open(filepath, 'r') as f:
