@@ -10,7 +10,7 @@ def openFile(filepath):
     return(data)
 
 def scoreRound(data):
-    '''scores each round in the input file'''
+    '''scores each round in the input file and adds it to the total score'''
     score = 0
     for i in data:
         if i[0] == 'A' and i[1] == 'X':
@@ -36,7 +36,7 @@ def scoreRound(data):
     return(score)
 
 def scoreRound2(data):
-    '''takes computer's choice and player's choice and returns score'''
+    '''takes computer's choice and player's instruction (to win or draw or lose) and returns score'''
     score = 0
     for i in data:
         if i[0] == 'A' and i[1] == 'X':
