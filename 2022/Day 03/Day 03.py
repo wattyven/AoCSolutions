@@ -27,7 +27,7 @@ def getIntersection(lst):
     for i in range(len(lst[0])):
         if lst[0][i] in lst[1]:
             inter.append(lst[0][i])
-    return(removeRepeats(inter))
+    return(removeRepeats(inter)) # should be using sets so i don't have to use removeRepeats() and can directly use .intersection()
 
 def compareLists(data):
     inter = []
@@ -43,7 +43,9 @@ def listofliststolistofstrings(lst):
     return(lst)
 
 def removeRepeats(lst):
-    '''removes duplicate characters from a list'''
+    '''removes duplicate characters from a list
+    I really should be using sets so i don't have to use 
+    removeRepeats() and can directly use .intersection()'''
     lst = list(set(lst))
     return(lst)
 
@@ -76,6 +78,7 @@ def findCommonElements(lst):
     for i in range(len(lst[0])):
         if lst[0][i] in lst[1] and lst[0][i] in lst[2]:
             common.append(lst[0][i])
+    # again, should swap this to use sets, will do this later
     return(removeRepeats(common))
 
 def compareLists(data):
