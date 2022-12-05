@@ -41,7 +41,6 @@ def makeMoves(instructions, towers):
         while movecount < count:
             towers[end].append(towers[start].pop())
             movecount += 1
-            #print(towers)
     return(towers)
 
 def lst2str(lst):
@@ -75,7 +74,8 @@ def getLast(towers):
         last +=(lst[-1])
     return(last)
 
-start = time.time()
-print(getLast(makeMoves(getInstructions(openFile(filepath)), towers))) # part one
-print(getLast(bulkMoves(getInstructions(openFile(filepath)), newdata))) # part two
-print('Time: ', time.time() - start, 's')
+if __name__ == '__main__':
+    start = time.time()
+    print(getLast(makeMoves(getInstructions(openFile(filepath)), towers))) # part one
+    print(getLast(bulkMoves(getInstructions(openFile(filepath)), newdata))) # part two
+    print('Time: ', time.time() - start, 's')
