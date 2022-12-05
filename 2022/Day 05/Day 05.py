@@ -2,16 +2,14 @@ filepath = 'Day 05 input.txt'
 
 import time
 
-# yes i hardcoded the towers as lists, yes i switch them back and forth between 
-# lists and strings a few times in here, yes it's DEFINITELY bad, 
-# but i got the answers i guess
+# okay now i've tweaked it a bit so the towers are taken as strings now and i'm not 
+# flip-flopping back and forth between handling lists and handling strings 
+# yes the towers are still hardcoded atm
 
-towers = [['G', 'T', 'R', 'W'], ['G', 'C', 'H', 'P', 'M', 'S', 'V', 'W'], 
-['C', 'L', 'T', 'S', 'G', 'M'], ['J', 'H', 'D', 'M', 'W', 'R', 'F'], 
-['P', 'Q', 'L', 'H', 'S', 'W', 'F', 'J'], ['P', 'J', 'D', 'N', 'F', 'M', 'S'], 
-['Z', 'B', 'D', 'F', 'G', 'C', 'S', 'J'], ['R', 'T', 'B'], ['H', 'N', 'W', 'L', 'C']]
+towers = ['GTRW', 'GCHPMSVW', 'CLTSGM', 'JHDMWRF', 'PQLHSWFJ', 'PJDNFMS', 'ZBDFGCSJ', 'RTB', 'HNWLC']
 
 # part one
+
 def openFile(filepath):
     '''reads the raw file'''
     with open(filepath, 'r') as f:
@@ -33,49 +31,39 @@ def getTowers(data):
 
 def makeMoves(instructions, towers):
     '''makes moves based on our instructions'''
+    newtowers = towers.copy()
     for instruction in instructions:
         start = int(instruction[3]) - 1
         end = int(instruction[5]) - 1
         count = int(instruction[1])
         movecount = 0
         while movecount < count:
-            towers[end].append(towers[start].pop())
+            newtowers[end] = newtowers[end] + newtowers[start][-1]
+            newtowers[start] = newtowers[start][:-1]
             movecount += 1
-    return(towers)
-
-def lst2str(lst):
-    '''converts a list to a string'''
-    string = ''
-    for item in lst:
-        string += item
-    return(string)
-
-def lstlsts2str(lst):
-    newlst = []
-    for item in lst:
-        newlst.append(lst2str(item))
-    return(newlst)
-
-newdata = (lstlsts2str(towers))
+    return(newtowers)
+ 
+# part two
 
 def bulkMoves(instructions, towers):
+    newtowers = towers.copy()
     for instruction in instructions:
         start = int(instruction[3]) - 1
         end = int(instruction[5]) - 1
         count = int(instruction[1])
-        towers[end] = towers[end] + towers[start][-count:]
-        towers[start] = towers[start][:-count]
-    return(towers)
+        newtowers[end] = newtowers[end] + newtowers[start][-count:]
+        newtowers[start] = newtowers[start][:-count]
+    return(newtowers)
 
-def getLast(towers):
+def getLast(lstlsts):
     '''gets the last element of each sublist in our list of lists'''
     last = ''
-    for lst in towers:
+    for lst in lstlsts:
         last +=(lst[-1])
     return(last)
 
 if __name__ == '__main__':
     start = time.time()
-    print(getLast(makeMoves(getInstructions(openFile(filepath)), towers))) # part one
-    print(getLast(bulkMoves(getInstructions(openFile(filepath)), newdata))) # part two
-    print('Time: ', time.time() - start, 's')
+    print('Part one: ', getLast(makeMoves(getInstructions(openFile(filepath)), towers)))
+    print('Part two: ', getLast(bulkMoves(getInstructions(openFile(filepath)), towers)))
+    print(f'Time elapsed was {time.time() - start} seconds')
