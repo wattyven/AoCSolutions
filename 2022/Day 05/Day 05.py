@@ -2,11 +2,7 @@ filepath = 'Day 05 input.txt'
 
 import time
 
-# okay now i've tweaked it a bit so the towers are taken as strings now and i'm not 
-# flip-flopping back and forth between handling lists and handling strings 
-# yes the towers are still hardcoded atm
-
-towers = ['GTRW', 'GCHPMSVW', 'CLTSGM', 'JHDMWRF', 'PQLHSWFJ', 'PJDNFMS', 'ZBDFGCSJ', 'RTB', 'HNWLC']
+# 6 dec 2022 -- updated the code so that the towers are no longer hardcoded
 
 # part one
 
@@ -26,8 +22,26 @@ def getInstructions(data):
                 instructions.append(newlst)
     return(instructions)
 
-def getTowers(data):
-    '''need to automate this instead of hardcoding it like i did'''
+def towerCount(data):
+    '''finds out where the towers end, and how many towers there are'''
+    for i in range(len(data)):
+        if data[i] == '':
+            cutoff = i - 1
+            break
+    return(cutoff)
+
+def buildTowers(cutoff, data):
+    '''builds the number of towers from towerCount'''
+    towers = data[cutoff].split()
+    i = cutoff - 1
+    while i >= 0:
+        for n in range(len(towers)):
+            if data[i][1 + 4 * n].isalpha():
+                towers[n] += data[i][1 + 4 * n]
+        i -= 1
+    for x in range(len(towers)):
+        towers[x] = towers[x][1:]
+    return(towers)
 
 def makeMoves(instructions, towers):
     '''makes moves based on our instructions'''
@@ -64,6 +78,10 @@ def getLast(lstlsts):
 
 if __name__ == '__main__':
     start = time.time()
-    print('Part one: ', getLast(makeMoves(getInstructions(openFile(filepath)), towers)))
-    print('Part two: ', getLast(bulkMoves(getInstructions(openFile(filepath)), towers)))
+    data = openFile(filepath)
+    numTowers = towerCount(data)
+    towers = buildTowers(numTowers, data)
+    towerInstructions = getInstructions(data)
+    print('Part one: ', getLast(makeMoves((towerInstructions), towers)))
+    print('Part two: ', getLast(bulkMoves((towerInstructions), towers)))
     print(f'Time elapsed was {time.time() - start} seconds')
