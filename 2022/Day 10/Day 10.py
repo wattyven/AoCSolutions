@@ -63,6 +63,7 @@ def execute(data):
             CRT = drawLogic(cycle, x, CRT)
             x += int(line[1])
     for line in CRT:
+        line = ''.join(line) # make it more legible
         print(line) # print the CRT for part two
     return sum(signals) # return the sum of the signals for part one
             
